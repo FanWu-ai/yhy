@@ -1,0 +1,1 @@
+run_id,timestamp_with_timezone,commit_id,condition,provider,model_id,prompt_version,material_id,material_chars,requested_count,difficulty,status,error_category,latency_seconds,accepted_count,reviewed_count,usable_count,input_tokens,output_tokens,actual_cost,currency,cost_source,private_raw_response_path,notes

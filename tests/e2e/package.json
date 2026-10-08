@@ -1,0 +1,15 @@
+{
+  "name": "zhiti-browser-smoke",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Optional local browser smoke test for the ZhiTi learning application",
+  "scripts": {
+    "test": "node browser_smoke.cjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

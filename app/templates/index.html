@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#eef5f1">
+  <title>知题 · 智能出题与错题管理</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳转到主要内容</a>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <a class="brand" href="#dashboard" aria-label="知题，返回学习概览">
+        <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M6 6.5c4.6-.8 7.9.4 10 2.5 2.1-2.1 5.4-3.3 10-2.5v18c-4.1-.8-7.4.1-10 2-2.6-1.9-5.9-2.8-10-2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 9v17M10 12h2m-2 4h2m8-4h2m-2 4h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <span><strong>知题<span class="brand-dot">.</span></strong><small>让知识，真正留下来</small></span>
+      </a>
+      <p class="nav-label">学习工作台</p>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="dashboard" aria-current="page"><span class="nav-icon" aria-hidden="true">◫</span>学习概览</button>
+        <button class="nav-item" data-view="materials"><span class="nav-icon" aria-hidden="true">▤</span>学习资料<span class="nav-count" id="nav-material-count">0</span></button>
+        <button class="nav-item" data-view="generate"><span class="nav-icon" aria-hidden="true">✧</span>智能出题</button>
+        <button class="nav-item" data-view="bank"><span class="nav-icon" aria-hidden="true">▦</span>我的题库<span class="nav-count" id="nav-question-count">0</span></button>
+        <button class="nav-item" data-view="quiz"><span class="nav-icon" aria-hidden="true">▹</span>在线练习</button>
+        <button class="nav-item" data-view="wrongbook"><span class="nav-icon" aria-hidden="true">↺</span>错题复习<span class="nav-count" id="nav-wrong-count">0</span></button>
+        <button class="nav-item" data-view="history"><span class="nav-icon" aria-hidden="true">◷</span>练习记录</button>
+      </nav>
+      <div class="sidebar-note"><span class="status-dot" aria-hidden="true"></span><span id="sidebar-mode">正在读取运行状态</span><small id="sidebar-model">资料驱动 · 循序渐进</small></div>
+      <div class="sidebar-footer"><span class="avatar" aria-hidden="true">学</span><span><strong>我的学习空间</strong><small>本地单用户工作台</small></span><span class="footer-lock" aria-hidden="true">⌂</span></div>
+    </aside>
+
+    <main id="main-content" class="main" tabindex="-1">
+      <div class="privacy-notice"><span aria-hidden="true">◉</span> 本地单用户，无登录保护。请仅在可信的本机环境使用，不要开放到公网。</div>
+      <header class="page-header">
+        <div><p class="eyebrow">YOUR LEARNING, CONNECTED</p><h1 id="page-title">学习概览</h1><p class="page-subtitle" id="page-subtitle">把学习资料变成练习，把每一次错误变成进步。</p></div>
+        <div class="header-actions"><span class="date-chip" id="today-label"></span><button class="button button-secondary button-sm" id="refresh-button" type="button"><span aria-hidden="true">↻</span> 刷新数据</button></div>
+      </header>
+      <div id="toast-region" class="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+      <div id="global-error" class="notice notice-error" role="alert" hidden></div>
+
+      <section id="view-dashboard" class="view" aria-label="学习概览">
+        <div class="hero">
+          <div class="hero-copy"><span class="pill hero-pill"><span class="status-dot" aria-hidden="true"></span> 从理解到掌握</span><h2>学过的知识，<br>值得被好好记住。</h2><p>上传资料，生成专属练习，再用错题复习补齐薄弱点。<br class="desktop-break">让每一次练习，都有据可循。</p><div class="hero-actions"><button class="button button-primary" type="button" data-navigate="generate">开始出题 <span aria-hidden="true">↗</span></button><button class="button button-white" id="seed-demo-button" type="button">体验示例课程</button></div><small>示例课程：Python 基础 · 无需 API Key</small></div>
+          <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="spark spark-one">✧</span><span class="spark spark-two">✧</span><div class="art-card art-back"><span class="art-line"></span><span class="art-line short"></span></div><div class="art-card art-front"><div class="art-card-top"><span class="art-book">▤</span><span class="art-card-label">学习小步 · 理解更深</span></div><div class="art-lines"><span></span><span></span><span></span></div><div class="art-answer"><span>✓</span><div><strong>知识 + 练习</strong><small>每一步，都是新的掌握</small></div></div></div><div class="art-float"><span>✓</span> 把错题变成会题</div></div>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card"><div class="stat-top"><span>学习资料</span><span class="stat-icon mint" aria-hidden="true">▤</span></div><strong id="stat-materials">—</strong><small>整理知识的起点</small></article>
+          <article class="stat-card"><div class="stat-top"><span>累计题目</span><span class="stat-icon blue" aria-hidden="true">▦</span></div><strong id="stat-questions">—</strong><small>属于你的专属题库</small></article>
+          <article class="stat-card"><div class="stat-top"><span>已完成练习</span><span class="stat-icon purple" aria-hidden="true">✓</span></div><strong id="stat-quizzes">—</strong><small id="stat-answered">从练习中看见进步</small></article>
+          <article class="stat-card"><div class="stat-top"><span>累计正确率</span><span class="stat-icon amber" aria-hidden="true">↗</span></div><strong id="stat-accuracy">—</strong><small id="stat-wrong">每一次回答都有反馈</small></article>
+        </div>
+        <div class="dashboard-grid"><article class="panel knowledge-panel"><div class="section-head"><div><h2>知识点掌握</h2><p>按历史作答结果，发现值得再练的地方</p></div><span class="tiny-label">LEARNING MAP</span></div><div id="knowledge-list"></div><div class="panel-footnote">正确率基于已提交作答，不代表对知识点的完整评估。</div></article><article class="panel recent-panel"><div class="section-head"><div><h2>最近练习</h2><p>记录每一次认真投入</p></div><button class="text-button" type="button" data-navigate="history">全部记录 ↗</button></div><div id="recent-list"></div></article></div>
+        <div class="learning-path"><div class="path-intro"><span class="eyebrow">A SIMPLE ROUTINE</span><h2>给学习一点清晰的顺序</h2></div><button type="button" class="path-step" data-navigate="materials"><span class="step-number">01</span><span><strong>整理资料</strong><small>让练习有可靠依据</small></span><span class="path-arrow" aria-hidden="true">↗</span></button><button type="button" class="path-step" data-navigate="generate"><span class="step-number">02</span><span><strong>生成练习</strong><small>围绕知识点主动回忆</small></span><span class="path-arrow" aria-hidden="true">↗</span></button><button type="button" class="path-step" data-navigate="wrongbook"><span class="step-number">03</span><span><strong>回顾错题</strong><small>把薄弱点逐一补齐</small></span><span class="path-arrow" aria-hidden="true">↗</span></button></div>
+      </section>
+
+      <section id="view-materials" class="view" aria-label="学习资料" hidden>
+        <div class="two-column"><article class="panel"><div class="section-head"><div><h2>添加学习资料</h2><p>保留原始文本，让出题与解析有据可查</p></div><span class="circle-label" aria-hidden="true">＋</span></div><form id="material-form"><div class="field"><label for="material-title">资料标题 <span class="required">*</span></label><input id="material-title" name="title" maxlength="120" required placeholder="例如：Python 基础知识整理"></div><div class="field"><label for="material-course">所属课程</label><input id="material-course" name="course" maxlength="80" placeholder="例如：程序设计基础"></div><fieldset class="source-switch"><legend>添加方式</legend><label><input type="radio" name="material-source" value="text" checked> 粘贴文本</label><label><input type="radio" name="material-source" value="file"> 上传文件</label></fieldset><div class="field" id="material-text-field"><label for="material-text">资料正文 <span class="required">*</span></label><textarea id="material-text" name="text" rows="10" minlength="20" maxlength="30000" required placeholder="粘贴课程笔记、教材节选或知识点说明……"></textarea><span class="field-hint">20–30,000 字符。仅添加你有权使用的资料；内容保存在本地数据库中。</span></div><div class="field upload-field" id="material-file-field" hidden><label for="material-file">选择资料文件 <span class="required">*</span></label><input id="material-file" name="file" type="file" accept=".txt,.md,.pdf"><span class="field-hint" id="upload-help">支持 TXT、Markdown、含文本层的 PDF（最多 40 页），最大 5 MB。</span></div><button class="button button-primary full-width" id="save-material-button" type="submit">保存资料</button></form></article><article class="panel"><div class="section-head"><div><h2>资料库</h2><p id="materials-summary">你的课程资料都在这里</p></div></div><div id="materials-list" class="stack"></div></article></div>
+      </section>
+
+      <section id="view-generate" class="view" aria-label="智能出题" hidden>
+        <div class="two-column generate-layout"><article class="panel"><div class="section-head"><div><h2>配置一组练习</h2><p>选择资料，按自己的节奏设定难度</p></div><span class="circle-label" aria-hidden="true">✧</span></div><form id="generate-form"><div class="field"><label for="generate-material">学习资料 <span class="required">*</span></label><select id="generate-material" required><option value="">请选择资料</option></select><span class="field-hint">还没有资料？<button class="inline-link" type="button" data-navigate="materials">先去添加</button>，或<button class="inline-link" type="button" id="generate-seed-button">加载示例</button>。</span></div><div class="form-row"><div class="field"><label for="generate-count">题目数量</label><input id="generate-count" type="number" min="1" max="10" value="5" required><span class="field-hint">每次 1–10 道单选题</span></div><div class="field"><label for="generate-difficulty">难度</label><select id="generate-difficulty"><option value="easy" selected>基础</option><option value="medium">进阶</option><option value="hard">挑战</option></select></div></div><fieldset class="mode-options"><legend>出题方式</legend><label class="mode-option"><input type="radio" name="generate-mode" value="demo" checked><span><strong>本地演示</strong><small>使用内置 Python 示例题，无需联网或密钥</small></span><span class="pill">DEMO</span></label><label class="mode-option" id="remote-mode-option"><input type="radio" name="generate-mode" value="openai" id="remote-mode-radio"><span><strong>真实 API（OpenAI 兼容）</strong><small id="remote-model-help">正在检查模型配置</small></span><span class="pill blue-pill">AI</span></label></fieldset><div class="notice notice-info" id="generation-mode-note">演示模式仅支持内置 Python 示例资料；自定义资料需要配置大语言模型。</div><button class="button button-primary full-width" id="generate-submit-button" type="submit">生成练习题 <span aria-hidden="true">✧</span></button><p class="form-footnote">模型生成的题目、答案与引文可能有误，请结合原文人工核验。</p></form></article><div class="stack"><article class="panel material-preview-panel"><div class="section-head"><div><h2>资料预览</h2><p>出题依据一目了然</p></div><span class="tiny-label">SOURCE</span></div><div id="generation-material-preview" class="source-preview empty-source">选择一份资料，查看原文内容。</div></article><article class="panel generation-result-panel" id="generation-results" hidden><div class="section-head"><div><h2>练习题已生成</h2><p id="generation-result-note"></p></div><span class="success-symbol" aria-hidden="true">✓</span></div><div id="generation-result-list" class="stack"></div><div class="button-row"><button class="button button-primary" id="practice-generated-button" type="button">开始这组练习</button><button class="button button-secondary" type="button" data-navigate="bank">前往题库</button></div></article></div></div>
+      </section>
+
+      <section id="view-bank" class="view" aria-label="我的题库" hidden>
+        <div class="toolbar"><div class="toolbar-copy"><h2 id="bank-summary">我的题目</h2><p>每次最多 50 题；导出仅包含资料与题目，不含练习记录。</p></div><div class="button-row"><a id="export-button" class="button button-secondary button-sm" href="/api/export" download>导出题库</a><button class="button button-secondary button-sm" id="import-button" type="button">导入备份</button><input id="import-file" type="file" accept=".json,application/json" aria-label="选择题库 JSON 备份文件" hidden><button class="button button-primary button-sm" type="button" data-navigate="generate">＋ 生成题目</button></div></div>
+        <div class="panel filter-panel"><div class="field search-field"><label for="bank-search">搜索题目或知识点</label><input id="bank-search" type="search" placeholder="输入关键词…"></div><div class="field"><label for="bank-material">资料来源</label><select id="bank-material"><option value="">全部资料</option></select></div><div class="field"><label for="bank-difficulty">题目难度</label><select id="bank-difficulty"><option value="">全部难度</option><option value="easy">基础</option><option value="medium">进阶</option><option value="hard">挑战</option></select></div></div>
+        <div class="selection-toolbar"><label class="checkbox-label"><input id="bank-select-all" type="checkbox"> 选择筛选结果（最多 50 题）</label><button id="bank-clear-selection" class="text-button" type="button">清空选择</button><span id="bank-selected-count">已选 0 / 50 道题</span><button class="button button-primary button-sm" id="practice-selected-button" type="button" disabled>开始练习 <span aria-hidden="true">→</span></button></div>
+        <div class="notice notice-subtle">题目及参考答案用于辅助学习。尤其是 AI 生成内容，请依据原始资料核验。</div><div id="bank-list" class="stack"></div>
+      </section>
+
+      <section id="view-quiz" class="view" aria-label="在线练习" hidden>
+        <div id="quiz-empty" class="panel big-empty"><span class="empty-illustration" aria-hidden="true">▹</span><h2>留一点时间，检验理解</h2><p>从题库选择一组题目。提交后，你可以查看参考答案、解析与原文出处。</p><div class="button-row"><button class="button button-primary" type="button" data-navigate="bank">去题库选题</button><button class="button button-secondary" id="quick-practice-button" type="button">快速练习前 10 题</button></div></div>
+        <div id="quiz-active" hidden><div class="panel quiz-intro"><div><span class="eyebrow" id="quiz-mode-label">FOCUS TIME</span><h2>专注这一刻，让知识留下来</h2><p id="quiz-progress-label">已作答 0 / 0 道</p></div><button class="button button-secondary button-sm" id="quit-quiz-button" type="button">结束本次练习</button><div class="quiz-progress-track"><div id="quiz-progress-bar"></div></div></div><form id="quiz-form"><div id="quiz-questions" class="stack"></div><div class="quiz-submit-bar"><span id="quiz-submit-hint">完成作答后提交，查看解析。</span><button class="button button-primary" id="submit-quiz-button" type="submit">提交答案</button></div></form></div>
+        <div id="quiz-result" hidden></div>
+      </section>
+
+      <section id="view-wrongbook" class="view" aria-label="错题复习" hidden>
+        <div class="toolbar"><div class="toolbar-copy"><h2 id="wrongbook-summary">把薄弱点变成掌握点</h2><p>答错的题目会自动收录，支持标记掌握与专项练习</p></div><button class="button button-primary" id="practice-wrong-button" type="button">练习未掌握错题 <span aria-hidden="true">↗</span></button></div><div class="segmented-control" role="group" aria-label="错题筛选"><button type="button" data-wrong-filter="unmastered" class="selected" aria-pressed="true">待复习</button><button type="button" data-wrong-filter="mastered" aria-pressed="false">已掌握</button><button type="button" data-wrong-filter="all" aria-pressed="false">全部错题</button></div><div id="wrongbook-list" class="stack"></div>
+      </section>
+
+      <section id="view-history" class="view" aria-label="练习记录" hidden>
+        <div class="panel"><div class="section-head"><div><h2>每一步都有记录</h2><p>回看得分、作答结果与解析，找到下一次进步的方向</p></div><span class="tiny-label">YOUR PROGRESS</span></div><div id="history-list"></div></div>
+      </section>
+      <footer class="page-footer"><span>知题 · 基于大语言模型的智能出题与错题管理系统</span><span>认真学习，也记得适时休息。</span></footer>
+    </main>
+  </div>
+  <dialog id="detail-dialog" aria-labelledby="dialog-title"><div class="dialog-header"><h2 id="dialog-title">详情</h2><button class="icon-button" id="close-dialog-button" type="button" aria-label="关闭详情">×</button></div><div id="dialog-content"></div></dialog>
+  <noscript><div class="noscript-notice">本系统需要启用 JavaScript 才能上传资料、生成题目和进行练习。</div></noscript>
+</body>
+</html>

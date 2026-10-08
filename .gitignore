@@ -1,0 +1,24 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+data/*
+!data/.gitkeep
+*.db
+*.db-*
+*.sqlite*
+.coverage
+htmlcov/
+test-results/
+playwright-report/
+
+# Private local learning data and evaluation artifacts
+experiment-private/
+exports/
+uploads/
+backups/
+tests/e2e/node_modules/
